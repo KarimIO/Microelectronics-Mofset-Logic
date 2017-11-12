@@ -5,14 +5,15 @@
 
 class Node {
 public:
-    virtual std::string Traverse() = 0;
+    virtual std::string Traverse() const = 0;
+    friend std::ostream& operator<<(std::ostream& os, const Node& dt); 
     virtual ~Node() {};
 };
 
 class InNode : public Node {
 public:
     InNode(char name);
-    virtual std::string Traverse();
+    virtual std::string Traverse() const;
     virtual ~InNode();
 private:
     char a_;
@@ -21,7 +22,7 @@ private:
 class NotNode : public Node {
 public:
     NotNode(Node *a);
-    virtual std::string Traverse();
+    virtual std::string Traverse() const;
     virtual ~NotNode();
 private:
     Node *a_;
@@ -30,7 +31,7 @@ private:
 class OrNode : public Node {
 public:
     OrNode(Node *a, Node *b);
-    virtual std::string Traverse();
+    virtual std::string Traverse() const;
     virtual ~OrNode();
 private:
     Node *a_;
@@ -40,7 +41,7 @@ private:
 class AndNode : public Node {
 public:
     AndNode(Node *a, Node *b);
-    virtual std::string Traverse();
+    virtual std::string Traverse() const;
     virtual ~AndNode();
 private:
     Node *a_;

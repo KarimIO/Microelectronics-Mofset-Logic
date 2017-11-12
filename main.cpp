@@ -15,6 +15,7 @@ Node *ConvertToNodes(std::string input) {
 
 int main(int argc, const char *argv[]) {
     Node *abc_ = ConvertToNodes("a&b|c'");
+    std::cout << *abc_ << std::endl;
     std::cout << abc_->Traverse() << std::endl;
     delete abc_;
 
