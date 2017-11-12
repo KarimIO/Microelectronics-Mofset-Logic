@@ -1,2 +1,2 @@
 All:
-	g++ graph.cpp main.cpp -o micro
+	g++ graph_converter.cpp graph.cpp main.cpp -o micro
