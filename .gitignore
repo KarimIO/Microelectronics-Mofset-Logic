@@ -7,3 +7,10 @@ CMakeFiles/*
 .vs/*
 .vscode/*
 CMakeCache.txt
+
+*.exe
+*.ilk
+*.pdb
+*.obj
+*.tlog
+*.log

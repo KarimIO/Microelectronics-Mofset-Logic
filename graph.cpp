@@ -1,5 +1,6 @@
 #include "graph.hpp"
 #include <iostream>
+#include <string>
 
 InNode::InNode(char name) : a_(name) {}
 NotNode::NotNode(Node *a) : a_(a) {}
