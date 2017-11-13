@@ -8,7 +8,8 @@ AndNode::AndNode(Node *a, Node *b) : a_(a), b_(b) {}
 OrNode::OrNode(Node *a, Node *b) : a_(a), b_(b) {}
 
 std::string InNode::Traverse() const {
-    return std::string(&a_);
+	char c[2] = { a_, 0 };
+	return c;
 }
 
 std::string NotNode::Traverse() const {
