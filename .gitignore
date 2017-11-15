@@ -14,3 +14,6 @@ CMakeCache.txt
 *.obj
 *.tlog
 *.log
+*.opensdf
+*.sdf
+*.v12.suo

@@ -3,6 +3,12 @@
 #include <iostream>
 #include <string>
 
+std::string ConvertToMofset(Node *input) {
+	Node *pun = DeMorgan(input);
+	Node *pdn = Invert(pun);
+	return pun->Mofset("Vdd", "y", PUN) + pdn->Mofset("y", "gnd", PDN);
+}
+
 int main(int argc, const char *argv[]) {
     GraphConverter conv;
     Node *n = conv.ConvertToNodes("(a|c)&(b|c)'");

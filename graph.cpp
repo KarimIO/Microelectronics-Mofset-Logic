@@ -29,6 +29,32 @@ std::ostream& operator<<(std::ostream& os, const Node& dt) {
     return os;
 }
 
+unsigned int wire_count, transistor_count;
+
+std::string InNode::Mofset(std::string up, std::string down, Network network) const {
+	if (network == PUN) {
+		// PUN
+		return std::string("M") + std::to_string(transistor_count) + " " + Traverse() + " " + up + " " + down + down + " PMOS";
+	}
+	else {
+		// PDN
+		return std::string("M") + std::to_string(transistor_count) + " " + Traverse() + " " + up + " " + down + down + " NMOS";
+	}
+}
+
+std::string NotNode::Mofset(std::string up, std::string down, Network network) const {
+
+}
+
+std::string AndNode::Mofset(std::string up, std::string down, Network network) const {
+	std::string wire_name = "w_" + (wire_count++);
+	return a_->Mofset(up, wire_name, network) + b_->Mofset(up, down, network);
+}
+
+std::string OrNode::Mofset(std::string up, std::string down, Network network) const {
+	return a_->Mofset(up, down, network) + b_->Mofset(up, down, network);
+}
+
 InNode::~InNode() {}
 
 NotNode::~NotNode() {
