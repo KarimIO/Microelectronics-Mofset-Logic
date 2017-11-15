@@ -8,10 +8,19 @@ enum Network {
 	PDN
 };
 
+enum NodeType {
+	INNODE = 0,
+	NOTNODE,
+	ORNODE,
+	ANDNODE
+};
+
 class Node {
 public:
+	virtual NodeType GetType() const = 0;
 	virtual std::string Traverse() const = 0;
 	virtual Node *Invert() const = 0;
+	virtual Node *DeMorgan() const = 0;
 	virtual std::string Mosfet(std::string up, std::string down, Network network) const = 0;
     friend std::ostream& operator<<(std::ostream& os, const Node& dt); 
     virtual ~Node() {};
@@ -20,8 +29,10 @@ public:
 class InNode : public Node {
 public:
     InNode(std::string name);
+	virtual inline NodeType GetType() const;
 	virtual std::string Traverse() const;
 	virtual Node *Invert() const;
+	virtual Node *DeMorgan() const;
 	virtual std::string Mosfet(std::string up, std::string down, Network network) const;
     virtual ~InNode();
 private:
@@ -31,8 +42,10 @@ private:
 class NotNode : public Node {
 public:
     NotNode(Node *a);
+	virtual inline NodeType GetType() const;
 	virtual std::string Traverse() const;
 	virtual Node *Invert() const;
+	virtual Node *DeMorgan() const;
 	virtual std::string Mosfet(std::string up, std::string down, Network network) const;
     virtual ~NotNode();
 private:
@@ -42,8 +55,10 @@ private:
 class OrNode : public Node {
 public:
     OrNode(Node *a, Node *b);
+	virtual inline NodeType GetType() const;
 	virtual std::string Traverse() const;
 	virtual Node *Invert() const;
+	virtual Node *DeMorgan() const;
 	virtual std::string Mosfet(std::string up, std::string down, Network network) const;
     virtual ~OrNode();
 private:
@@ -54,8 +69,10 @@ private:
 class AndNode : public Node {
 public:
     AndNode(Node *a, Node *b);
+	virtual inline NodeType GetType() const;
 	virtual std::string Traverse() const;
 	virtual Node *Invert() const;
+	virtual Node *DeMorgan() const;
 	virtual std::string Mosfet(std::string up, std::string down, Network network) const;
     virtual ~AndNode();
 private:

@@ -3,7 +3,8 @@
 
 // Not final. a&b|c'
 Node *GraphConverter::ConvertToNodes(std::string input) {
-    for (char &c : input) {
+    for (int i = 0; i < input.size(); i++) {
+        char c = input[i];
         if (c == '\'') {
             Node *n = nodestack.top();
             nodestack.pop();
@@ -19,7 +20,17 @@ Node *GraphConverter::ConvertToNodes(std::string input) {
             parseRightParenthesis();
         }
         else {
-            nodestack.push(new InNode(c));
+            std::string variable;
+            for (;i < input.size(); i++) {
+                if (input[i] == ')' || input[i] == '(' || input[i] == '|'
+                    || input[i] == '\'' || input[i] == '&') {
+                    i--;
+                    break;
+                }
+
+                variable.push_back(input[i]);
+            }
+            nodestack.push(new InNode(variable));
         }
     }
 

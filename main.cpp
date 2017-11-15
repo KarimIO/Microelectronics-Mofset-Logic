@@ -4,22 +4,28 @@
 #include <string>
 
 std::string ConvertToMofset(Node *input) {
-	Node *pun = DeMorgan(input);
+	Node *pun = input->DeMorgan();
+	std::cout << "PUN: " << *pun << std::endl;
 	Node *pdn = pun->Invert();
-	return pun->Mosfet("Vdd", "y", PUN) + pdn->Mosfet("y", "gnd", PDN);
+	std::cout << "PDN: " << *pdn << std::endl;
+	
+	std::string output = "PUN Network: \n" + pun->Mosfet("Vdd", "y", PUN);
+	output += "==============\nPDN Network: \n" + pdn->Mosfet("y", "gnd", PDN);
+
+	delete pdn;
+	delete pun;
+	
+	return output;
 }
 
 int main(int argc, const char *argv[]) {
+	std::string input;
+	std::cout << "Please insert boolean logic using |, &, and ': \n";
+	std::cin >> input;
     GraphConverter conv;
-    Node *n = conv.ConvertToNodes("(a|c)&(b|c)'");
-	InNode *a = new InNode('a');
-	InNode *b = new InNode('b');
-	InNode *c = new InNode('c');
-	NotNode *c_ = new NotNode(c);
-	AndNode *ab = new AndNode(a, b);
-	OrNode *abc_ = new OrNode(ab, c_);
-    std::cout << *abc_ << std::endl;
-    std::cout << n->Traverse() << std::endl;
+    Node *n = conv.ConvertToNodes(input);
+    std::cout << "Input: " << *n << std::endl;
+    std::cout << ConvertToMofset(n) << std::endl;
     delete n;
 
 #ifdef _MSC_VER
