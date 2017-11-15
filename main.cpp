@@ -5,8 +5,8 @@
 
 std::string ConvertToMofset(Node *input) {
 	Node *pun = DeMorgan(input);
-	Node *pdn = Invert(pun);
-	return pun->Mofset("Vdd", "y", PUN) + pdn->Mofset("y", "gnd", PDN);
+	Node *pdn = pun->Invert();
+	return pun->Mosfet("Vdd", "y", PUN) + pdn->Mosfet("y", "gnd", PDN);
 }
 
 int main(int argc, const char *argv[]) {
