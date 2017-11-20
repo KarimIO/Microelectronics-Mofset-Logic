@@ -6,8 +6,9 @@
 
 class GraphConverter {
 public:
-    void doBinary(char c);
-    void processOperator(char c);
+	void doBinary(char c);
+	void processOperator(char c);
+	void processOperator2(char c);
     void parseRightParenthesis();
     Node *ConvertToNodes(std::string input);
 private:

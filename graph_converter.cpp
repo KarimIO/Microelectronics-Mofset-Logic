@@ -9,10 +9,13 @@ Node *GraphConverter::ConvertToNodes(std::string input) {
             Node *n = nodestack.top();
             nodestack.pop();
             nodestack.push(new NotNode(n)); 
-        }
-        else if (c == '|' || c == '&') {
-            processOperator(c);
-        }
+		}
+		else if (c == '&') {
+			processOperator(c);
+		}
+		else if (c == '|') {
+			processOperator2(c);
+		}
         else if (c == '(') {
             opstack.push('(');
         }
@@ -74,11 +77,21 @@ void GraphConverter::doBinary(char c) {
 }
 
 void GraphConverter::processOperator(char c) {
-    while (!opstack.empty() && opstack.top() != '(' )  {
-        doBinary( opstack.top() );
-        opstack.pop();
-    }
+	while (!opstack.empty() && opstack.top() != '(' && opstack.top() != '|')  {
+		doBinary(opstack.top());
+		opstack.pop();
+	}
 
-    // lastly push the operator passed onto the operatorStack
-    opstack.push(c);
+	// lastly push the operator passed onto the operatorStack
+	opstack.push(c);
+}
+
+void GraphConverter::processOperator2(char c) {
+	while (!opstack.empty() && opstack.top() != '(')  {
+		doBinary(opstack.top());
+		opstack.pop();
+	}
+
+	// lastly push the operator passed onto the operatorStack
+	opstack.push(c);
 }
