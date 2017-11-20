@@ -71,49 +71,44 @@ Node *AndNode::DeMorgan() const {
 }
 
 unsigned int wire_count = 0;
-unsigned int transistor_count = 0;
 
-std::string InNode::Mosfet(std::string up, std::string down, Network network) const {
+std::string InNode::Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistor_count) const {
 	if (network == PUN) {
 		// PUN
-		std::string wire_name = std::string("w_") + std::to_string(wire_count++);
-		std::string output = std::string("M") + std::to_string(transistor_count++) + " " + Traverse() + " Vdd " + wire_name + " " + wire_name + " PMOS\n";
-		output += std::string("M") + std::to_string(transistor_count++) + " " + wire_name + " " + up + " " + down + " " + down + " PMOS\n";
-		output += std::string("M") + std::to_string(transistor_count++) + " " + Traverse() + " " + wire_name + " gnd gnd NMOS\n";
-		return output;
+		inverters[name_]++;
+		return std::string("\tM") + std::to_string(transistor_count++) + " " + down + " wire_inv_" + name_ + " " + up + " " + up + " PMOS\n";
 	}
 	else {
 		// PDN
-		return std::string("M") + std::to_string(transistor_count++) + " " + Traverse() + " " + up + " " + down + " " + down + " NMOS\n";
+		return std::string("\tM") + std::to_string(transistor_count++) + " " + up + " " + name_ + " " + down + " " + down + " NMOS\n";
 	}
 }
 
-std::string NotNode::Mosfet(std::string up, std::string down, Network network) const {
+std::string NotNode::Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistor_count) const {
+	// Note: All children should be innodes at this stage, due to DeMorgan
 	std::string child_name = a_->Traverse();
+	
 	if (network == PUN) {
 		// PUN
-		return std::string("M") + std::to_string(transistor_count++) + " " + child_name + " " + up + " " + down + down + " PMOS\n";
+		return std::string("\tM") + std::to_string(transistor_count++) + " " + down + " " + child_name + " " + up + " " + up + " PMOS\n";
 	}
 	else {
 		// PDN
-		std::string wire_name = std::string("w_") + std::to_string(wire_count++);
-		std::string output = std::string("M") + std::to_string(transistor_count++) + " " + child_name + " Vdd " + wire_name + " " + wire_name + " PMOS\n";
-		output += std::string("M") + std::to_string(transistor_count++) + " " + wire_name + " " + up + " " + down + " " + down + " NMOS\n";
-		output += std::string("M") + std::to_string(transistor_count++) + " " + child_name + " " + wire_name + " gnd gnd NMOS\n";
-		return output;
+		inverters[child_name]++;
+		return std::string("\tM") + std::to_string(transistor_count++) + " " + up + " wire_inv_" + child_name + " " + down + " " + down + " NMOS\n";
 	}
 }
 
-std::string AndNode::Mosfet(std::string up, std::string down, Network network) const {
+std::string AndNode::Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistor_count) const {
 	std::string wire_name = std::string("w_") + std::to_string(wire_count++);
-	std::string out = a_->Mosfet(up, wire_name, network);
-	out += b_->Mosfet(up, down, network);
+	std::string out = a_->Mosfet(up, wire_name, network, inverters, transistor_count);
+	out += b_->Mosfet(wire_name, down, network, inverters, transistor_count);
 	return out;
 }
 
-std::string OrNode::Mosfet(std::string up, std::string down, Network network) const {
-	std::string out = a_->Mosfet(up, down, network);
-	out += b_->Mosfet(up, down, network);
+std::string OrNode::Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistor_count) const {
+	std::string out = a_->Mosfet(up, down, network, inverters, transistor_count);
+	out += b_->Mosfet(up, down, network, inverters, transistor_count);
 	return out;
 }
 
