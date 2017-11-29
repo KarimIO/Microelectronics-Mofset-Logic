@@ -26,7 +26,8 @@ public:
 	virtual Node *Invert() const = 0;
 	virtual Node *DeMorgan() const = 0;
 	virtual uint longestPath() const = 0;
-	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const = 0;
+	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count, float width, float length) const = 0;
+    virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const = 0;
     friend std::ostream& operator<<(std::ostream& os, const Node& dt); 
     virtual ~Node() {};
 };
@@ -39,7 +40,8 @@ public:
 	virtual Node *Invert() const;
 	virtual Node *DeMorgan() const;
 	virtual uint longestPath() const;
-	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
+	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count, float width, float length) const;
+    virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
     virtual ~InNode();
 private:
     std::string name_;
@@ -53,7 +55,8 @@ public:
 	virtual Node *Invert() const;
 	virtual Node *DeMorgan() const;
 	virtual uint longestPath() const;
-	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
+	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count, float width, float length) const;
+    virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
     virtual ~NotNode();
 private:
     Node *a_;
@@ -67,7 +70,8 @@ public:
 	virtual Node *Invert() const;
 	virtual Node *DeMorgan() const;
 	virtual uint longestPath() const;
-	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
+	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count, float width, float length) const;
+    virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
     virtual ~OrNode();
 private:
     Node *a_;
@@ -82,7 +86,8 @@ public:
 	virtual Node *Invert() const;
 	virtual Node *DeMorgan() const;
 	virtual uint longestPath() const;
-	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
+	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count, float width, float length) const;
+    virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
     virtual ~AndNode();
 private:
     Node *a_;
