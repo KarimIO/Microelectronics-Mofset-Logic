@@ -112,6 +112,26 @@ std::string OrNode::Mosfet(std::string up, std::string down, Network network, st
 	return out;
 }
 
+uint InNode::longestPath() const {
+	return 1;
+}
+
+uint NotNode::longestPath() const {
+	return a_->longestPath();
+}
+
+uint AndNode::longestPath() const {
+	return a_->longestPath() + b_->longestPath();
+}
+
+uint OrNode::longestPath() const {
+	uint a_length = a_->longestPath();
+	uint b_length = b_->longestPath();
+
+	// Choose longer length.
+	return (a_length > b_length) ? a_length : b_length;
+}
+
 InNode::~InNode() {}
 
 NotNode::~NotNode() {

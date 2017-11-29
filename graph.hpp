@@ -17,12 +17,15 @@ enum NodeType {
 	ANDNODE
 };
 
+typedef unsigned int uint;
+
 class Node {
 public:
 	virtual NodeType GetType() const = 0;
 	virtual std::string Traverse() const = 0;
 	virtual Node *Invert() const = 0;
 	virtual Node *DeMorgan() const = 0;
+	virtual uint longestPath() const = 0;
 	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const = 0;
     friend std::ostream& operator<<(std::ostream& os, const Node& dt); 
     virtual ~Node() {};
@@ -35,6 +38,7 @@ public:
 	virtual std::string Traverse() const;
 	virtual Node *Invert() const;
 	virtual Node *DeMorgan() const;
+	virtual uint longestPath() const;
 	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
     virtual ~InNode();
 private:
@@ -48,6 +52,7 @@ public:
 	virtual std::string Traverse() const;
 	virtual Node *Invert() const;
 	virtual Node *DeMorgan() const;
+	virtual uint longestPath() const;
 	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
     virtual ~NotNode();
 private:
@@ -61,6 +66,7 @@ public:
 	virtual std::string Traverse() const;
 	virtual Node *Invert() const;
 	virtual Node *DeMorgan() const;
+	virtual uint longestPath() const;
 	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
     virtual ~OrNode();
 private:
@@ -75,6 +81,7 @@ public:
 	virtual std::string Traverse() const;
 	virtual Node *Invert() const;
 	virtual Node *DeMorgan() const;
+	virtual uint longestPath() const;
 	virtual std::string Mosfet(std::string up, std::string down, Network network, std::map<std::string, unsigned int> &inverters, unsigned int &transistors_count) const;
     virtual ~AndNode();
 private:
