@@ -96,7 +96,9 @@ This section is for the procedure followed in testing the 2 modes of operations:
 
 ### Simple Mode
 Inputting the following expression and expecting the Spice description of the following circuit.
+
 `Y = (A&(B|C&D))’`
+
 ![Input Circuit](ReadmeImages/1.png)
 
 The output of the code is:
@@ -104,7 +106,9 @@ The output of the code is:
 
 ### The Transistor-Scaling Mode
 Inputting the following expression and details of dimensions in the following format and expecting the Spice description of the following circuit, along with sizing information; with a single space separating each of the inputs.
+
 `Y = ((D&C)|B)&A p=5 L=0.25 n=1.5`
+
 ![Input Circuit](ReadmeImages/3.png)
 
 The output of the code is:
