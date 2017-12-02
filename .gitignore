@@ -3,10 +3,11 @@
 *.out
 Makefile
 *.cmake
-CMakeFiles/*
-.vs/*
-.vscode/*
+*/CMakeFiles/*
+*/.vs/*
+*/.vscode/*
 CMakeCache.txt
+test.txt
 
 *.exe
 *.ilk
@@ -16,5 +17,5 @@ CMakeCache.txt
 *.log
 *.opensdf
 *.sdf
-*.v12.suo
+*.suo
 logic
